@@ -1,0 +1,27 @@
+name: Static analysis of wearable
+
+on:
+  push:
+    paths:
+    - 'Project2/**'
+    
+jobs:
+  static-Code-analysis:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install dependencies
+      run: |
+           sudo apt-get install cppcheck 
+              
+    - uses: actions/checkout@v2
+    - name: Static analysis using cppcheck
+      run:  |
+           cppcheck --enable=all  Project2
+           cppcheck --enable=all --force -q --xml --suppress=missingInclude --output-file=project2.xml  Project2
+           
+    - uses: actions/upload-artifact@v2
+      with:
+         name: Project2report
+         path: project2.xml

@@ -1,0 +1,29 @@
+name: Static analysis of Node
+
+on:
+  push:
+    paths:
+    - 'Project1/device/**'
+        
+jobs:
+  static-Code-analysis:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install dependencies
+      run:  sudo apt-get install cppcheck 
+              
+    - uses: actions/checkout@v2
+    - name: Static analysis using cppcheck
+      run:  |
+            echo "Executing script files" 
+            cd Project1
+            chmod 777 sca.sh
+            ./sca.sh
+            cd ../
+                      
+    - uses: actions/upload-artifact@v2
+      with:
+         name: Project1report
+         path: Project1/report/sca.xml
