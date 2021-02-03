@@ -22,6 +22,9 @@ jobs:
             chmod 777 sca.sh
             ./sca.sh
             cd ../
+            echo ${{github.actor}}
+            echo ${{github.repository}}
+            echo ${{ github.ref }}
                       
     - uses: actions/upload-artifact@v2
       with:
